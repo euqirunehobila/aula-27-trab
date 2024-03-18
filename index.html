@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+
+<head>
+    </body>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="shortcut icon" href="tic-tac-toe.png">
+    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic Tac Toe</title>
+
+</head>
+
+<body>
+
+
+    <div class="tic-tac-toe">
+        <div class="content">
+
+            <div class="title">
+
+                <h1>Tic Tac Toe</h1>
+            </div>
+
+            <p id="currentPlayer">Vez do jogador: X</p>
+
+
+            <div class="board" id="board">
+
+                <div class="cell" onclick="cellClicked(0)"></div>
+                <div class="cell" onclick="cellClicked(1)"></div>
+                <div class="cell" onclick="cellClicked(2)"></div>
+                <div class="cell" onclick="cellClicked(3)"></div>
+                <div class="cell" onclick="cellClicked(4)"></div>
+                <div class="cell" onclick="cellClicked(5)"></div>
+                <div class="cell" onclick="cellClicked(6)"></div>
+                <div class="cell" onclick="cellClicked(7)"></div>
+                <div class="cell" onclick="cellClicked(8)"></div>
+            </div>
+            <div class="counter">
+                <div class="playerX">
+                    <h3>Pontos do jogador X: </h3>
+                    <p id="scoreX">0</p>
+                </div>
+                <div class="playerO">
+                    <h3>Pontos do jogador O: </h3>
+                    <p id="scoreO">0</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <footer class="footer">
+        <div class="footer-sci">
+            <a href="https://www.linkedin.com/in/alibiohenrique"><i class='bx bxl-linkedin-square'></i></a>
+            <a href="https://github.com/alibiohenrique"><i class='bx bxl-github'></i></a>
+            <a href="https://www.youtube.com/@AlibioTv"><i class='bx bxl-youtube' src=""></i></a>
+        </div>
+        <div class="footer-text">
+            <p>Desenvolvido por <a href="https://www.linkedin.com/in/alibiohenrique/?locale=pt_BR"><span>Henrique
+                        Alibio</span></a> &COPY | 2024</p>
+        </div>
+    </footer>
+    <script>
+
+        let currentPlayer = 'X';
+        let board = ['', '', '', '', '', '', '', '', ''];
+        let scoreX = 0;
+        let scoreO = 0;
+
+        function cellClicked(index) {
+            if (board[index] === '') {
+                board[index] = currentPlayer;
+                document.getElementById('board').children[index].innerText = currentPlayer;
+                checkWinner();
+                currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+                displayCurrentPlayer();
+            }
+        }
+
+        function checkWinner() {
+            const winConditions = [
+                [0, 1, 2], [3, 4, 5], [6, 7, 8],
+                [0, 3, 6], [1, 4, 7], [2, 5, 8],
+                [0, 4, 8], [2, 4, 6]
+            ];
+
+            for (let condition of winConditions) {
+                const [a, b, c] = condition;
+                if ((board[a] !== '') && (board[a] === board[b]) && (board[a] === board[c])) {
+                    alert(`Jogador ${board[a]} venceu`);
+                    if (board[a] === 'X') {
+                        scoreX++;
+                        document.getElementById('scoreX').innerText = scoreX;
+                    } else {
+                        scoreO++;
+                        document.getElementById('scoreO').innerText = scoreO;
+                    }
+                    resetBoard();
+                    return;
+                }
+            }
+            if (!board.includes('')) {
+                alert('Empate');
+                resetBoard();
+            }
+        }
+
+        function resetBoard() {
+            currentPlayer = 'X';
+            board = ['', '', '', '', '', '', '', '', ''];
+            for (let i = 0; i < 9; i++) {
+                document.getElementById('board').children[i].innerText = '';
+            }
+        }
+
+        function displayCurrentPlayer() {
+            document.getElementById('currentPlayer').innerText = `Vez do jogador: ${currentPlayer}`;
+        }
+
+    </script>
+</body>
+
+
+
+
+</html>
